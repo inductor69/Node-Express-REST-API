@@ -7,20 +7,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
     <script>
-        $(document).ready(function(){
- 
- $.ajax({
-          url: "http://localhost:8000/api/user/",
-          type: 'GET',
-          dataType: 'json',
-          success: function(res) {
-             $('#result').html(res)
-          }
-      });
- 
- })
- 
-     </script>
+
+function reqListener() {
+  var data = JSON.parse(this.responseText);
+  document.querySelector("#result").innerHTML = data.data.name;
+}
+
+// Create a new ajax requst
+var oReq = new XMLHttpRequest();
+// Fire callback on load event
+oReq.addEventListener("load", reqListener);
+// Create the connection to our API
+oReq.open("GET", "http://localhost:8000/api/user/6");
+// Fire the request
+oReq.send();
+        
+        </script>
 </head>
 
 <body>
@@ -37,9 +39,9 @@
             <input type="submit" value="Submit">
         </fieldset>
     </form>
-    <div className="container">
-        <div id="result" >
-      </div>
+    <div id="result">
+
+    </div>
       
    
 </body>

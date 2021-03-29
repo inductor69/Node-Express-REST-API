@@ -4,6 +4,7 @@ var db = require("./database.js")
 var md5 = require("md5")
 
 var bodyParser = require("body-parser");
+const { json } = require("express");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -113,6 +114,8 @@ app.post("/api/user/", (req, res, next) => {
             //     "id": this.lastID
             // })
     });
+    (JSON.stringify(data));
+
 })
 
 
@@ -138,7 +141,7 @@ app.patch("/api/user/:id", (req, res, next) => {
                 data: data
             })
         });
-        console.log(JSON.stringify(data));
+        (JSON.stringify(data));
 
 })
 
@@ -154,7 +157,7 @@ app.delete("/api/user/:id", (req, res, next) => {
             }
             res.json({ "message": "deleted", rows: this.changes })
         });
-        console.log(JSON.stringify(data));
+        (JSON.stringify(data));
 
 })
 
@@ -162,5 +165,6 @@ app.delete("/api/user/:id", (req, res, next) => {
 // Root path
 app.get("/", (req, res, next) => {
     res.json({ "message": "Ok" })
+    console.log(JSON.stringify({"message": "Ok" }))
     
 });
