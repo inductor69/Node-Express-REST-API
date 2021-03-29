@@ -74,11 +74,24 @@ app.post("/api/user/", (req, res, next) => {
             res.status(400).json({ "error": err.message })
             return;
         }
-        res.json({
-            "message": "success",
-            "data": data,
-            "id": this.lastID
-        })
+        res.send(`<h1>New User Successfully Registered!!</h1>
+        <table>
+        <tr>
+        <th>Name</th>
+        <th>Email ID</th>
+        <th>Password</th>
+        </tr>
+        <tr>
+        <td>${data.name}</td>
+        <td>${data.email}</td>
+        <td>${data.password}</td>
+        </tr>
+        </table>`)
+            // res.json({
+            //     "message": "success",
+            //     "data": data,
+            //     "id": this.lastID
+            // })
     });
 })
 
