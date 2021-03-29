@@ -14,6 +14,26 @@ app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%", HTTP_PORT))
 });
 
+app.use(function (req, res, next) {
+  /*var err = new Error('Not Found');
+   err.status = 404;
+   next(err);*/
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization');
+
+//  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+  // Pass to next layer of middleware
+  next();
+});
+
 app.get("/api/users", (req, res, next) => {
     var sql = "select * from user"
     var params = []
@@ -74,14 +94,26 @@ app.post("/api/user/", (req, res, next) => {
             res.status(400).json({ "error": err.message })
             return;
         }
-        res.json({
-            "message": "success",
-            "data": data,
-            "id": this.lastID
-        })
+        res.send(`<h1>New User Successfully Registered!!</h1>
+        <table>
+        <tr>
+        <th>Name</th>
+        <th>Email ID</th>
+        <th>Password</th>
+        </tr>
+        <tr>
+        <td>${data.name}</td>
+        <td>${data.email}</td>
+        <td>${data.password}</td>
+        </tr>
+        </table>`)
+            // res.json({
+            //     "message": "success",
+            //     "data": data,
+            //     "id": this.lastID
+            // })
     });
 })
-
 
 
 app.patch("/api/user/:id", (req, res, next) => {
@@ -106,6 +138,8 @@ app.patch("/api/user/:id", (req, res, next) => {
                 data: data
             })
         });
+        console.log(JSON.stringify(data));
+
 })
 
 
@@ -120,10 +154,13 @@ app.delete("/api/user/:id", (req, res, next) => {
             }
             res.json({ "message": "deleted", rows: this.changes })
         });
+        console.log(JSON.stringify(data));
+
 })
 
 
 // Root path
 app.get("/", (req, res, next) => {
     res.json({ "message": "Ok" })
+    
 });

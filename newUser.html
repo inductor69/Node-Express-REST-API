@@ -4,7 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <title>New User Registration</title>
-    <script src="register.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+ 
+ $.ajax({
+          url: "http://localhost:8000/api/user/1",
+          type: 'GET',
+          dataType: 'json',
+          success: function(res) {
+             $('#result').html(res)
+          }
+      });
+ 
+ })
+ 
+     </script>
 </head>
 
 <body>
@@ -21,6 +37,11 @@
             <input type="submit" value="Submit">
         </fieldset>
     </form>
+    <div className="container">
+        <div id="result" >
+      </div>
+      
+   
 </body>
 
 </html>
