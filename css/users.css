@@ -1,4 +1,7 @@
-table {
+table,
+th,
+td {
+    border: 1px solid #dee2e6;
     background-color: #343a40;
     color: #ced4da;
 }

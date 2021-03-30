@@ -47,7 +47,8 @@ app.get("/api/users", (req, res, next) => {
         <title>All Users</title>
         <link rel="stylesheet" href="${__dirname}/css/users.css">
         <style>
-        table{background-color: #343a40;color:#ced4da;}
+        table, th, td {border: 1px solid #dee2e6;background-color: #343a40;color:#ced4da;}
+        th,td{margin:10px}
         body{background-color:#212529;}
         h1{color:#dee2e6;}
         </style></head>`)
@@ -70,6 +71,7 @@ app.get("/api/users", (req, res, next) => {
                 </tr>`);
         }
         res.write(`</table></body>`);
+        res.send();
     });
 });
 
@@ -82,10 +84,29 @@ app.get("/api/user/:id", (req, res, next) => {
             res.status(400).json({ "error": err.message });
             return;
         }
-        res.json({
-            "message": "success",
-            "data": row
-        })
+        res.write(`
+        <head>
+        <title>${row.name}</title>
+        <style>
+        table, th, td {border: 1px solid #dee2e6;background-color: #343a40;color:#ced4da;}
+        body{background-color:#212529;}
+        h1{color:#dee2e6;}
+        </style>
+        </head>
+        <h1>User Details</h1>
+        <table>
+        <tr>
+        <th>Name</th>
+        <th>Email ID</th>
+        <th>Password</th>
+        </tr>
+        <tr>
+        <td>${row.name}</td>
+        <td>${row.email}</td>
+        <td>${row.password}</td>
+        </tr>
+        </table>`);
+        res.send();
     });
 });
 
@@ -130,12 +151,12 @@ app.post("/api/user/", (req, res, next) => {
         <td>${data.email}</td>
         <td>${data.password}</td>
         </tr>
-        </table>`)
-            // res.json({
-            //     "message": "success",
-            //     "data": data,
-            //     "id": this.lastID
-            // })
+        </table>`);
+        // res.json({
+        //     "message": "success",
+        //     "data": data,
+        //     "id": this.lastID
+        // })
     });
     (JSON.stringify(data));
 
